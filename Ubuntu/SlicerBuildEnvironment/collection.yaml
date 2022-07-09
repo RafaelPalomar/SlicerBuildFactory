@@ -1,17 +1,24 @@
 packages:
 
   - category: "ubuntu"
-    name: "SlicerBuildEnvironment-jammy"
+    name: "SlicerBuildEnvironment_jammy"
     version: "0.1"
-    requires:
-      - name: "OSBase-jammy"
-        category: "ubuntu"
-        version: ">=0.1"
-
-  - category: "ubuntu"
-    name: "SlicerBuildEnvironment-bionic"
-    version: "0.1"
-    requires:
-      - name: "OSBase-bionic"
-        category: "ubuntu"
-        version: ">=0.1"
+    labels:
+      system.requirements: >-
+        build-essential
+        cmake
+        cmake-curses-gui
+        git
+        libxt-dev
+        libssl-dev
+        subversion
+      system.qt: "yes"
+      system.qt-libs: >-
+        libqt5svg5-dev
+        libqt5xmlpatterns5-dev
+        libqt5x11extras5-dev
+        qtbase5-private-dev
+        qtmultimedia5-dev
+        qtscript5-dev
+        qttools5-dev
+        qtwebengine5-dev
