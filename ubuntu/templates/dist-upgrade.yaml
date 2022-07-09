@@ -1,0 +1,3 @@
+{{ define "dist-upgrade" }}
+- apt update && apt dist-upgrade -y
+{{end}}

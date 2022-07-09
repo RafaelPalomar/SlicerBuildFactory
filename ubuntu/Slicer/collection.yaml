@@ -1,0 +1,9 @@
+packages:
+
+  - category: "ubuntu"
+    name: "Slicer"
+    version: "0.1-jammy"
+
+  - category: "ubuntu"
+    name: "Slicer"
+    version: "0.1-bionic"
