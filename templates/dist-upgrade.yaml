@@ -1,0 +1,9 @@
+# Ubuntu
+{{ define "ubuntu-dist-upgrade" }}
+- apt update && apt dist-upgrade -y
+{{end}}
+
+# Archlinux
+{{ define "archlinux-dist-upgrade" }}
+- pacman -Syu --noconfirm
+{{end}}

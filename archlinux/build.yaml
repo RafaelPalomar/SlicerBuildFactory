@@ -1,4 +1,4 @@
 image: {{ .Values.category }}:{{ regexSplit ".*-" .Values.version -1 | last }}
 prelude:
-  {{ template "ubuntu-dist-upgrade" }}
+  {{ template "archlinux-dist-upgrade" }}
 steps:
