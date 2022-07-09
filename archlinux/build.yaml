@@ -1,4 +1,0 @@
-image: {{ .Values.category }}:{{ regexSplit ".*-" .Values.version -1 | last }}
-prelude:
-  {{ template "archlinux-dist-upgrade" }}
-steps:

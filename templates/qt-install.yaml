@@ -1,0 +1,29 @@
+{{ define "qt-install" }}
+- |
+  cd /usr/src; \
+  curl -LO http://download.qt.io/official_releases/online_installers/qt-unified-linux-x64-online.run; \
+  # chmod u+x qt-unified-linux-x64-online.run
+  # ./qt-unified-linux-x64-online.run \
+  #     install \
+  #     qt.qt5.5152.gcc_64 \
+  #     qt.qt5.5152.qtscript \
+  #     qt.qt5.5152.qtscript.gcc_64 \
+  #     qt.qt5.5152.qtwebengine \
+  #     qt.qt5.5152.qtwebengine.gcc_64\
+  #     --root /opt/qt \
+  #     --email mail \
+  #     --pw pass \
+  #     --verbose \
+  #     --platform minimal \
+  #     --accept-licenses \
+  #     --accept-obligations \
+  #     --confirm-command \
+  #     --auto-answer telemetry-question=No,AssociateCommonFiletypes=No,installationErrorWithCancel=Ignore,OverwriteTargetDirectory=No
+  # rm -f qt-unified-linux-x64-online.run
+  # # Cleanup
+  # #
+  # find /opt/qt -maxdepth 1 -type f -exec rm -rf "{}"
+  # find /opt/qt -type f -name "*.debug" -delete
+  # find /opt/qt/5.15.2/gcc_64/bin -type f -executable -exec strip {}
+  # rm -rf /opt/qt/dist /opt/qt/Docs /opt/qt/Examples /opt/qt/Tools
+{{end}}

@@ -1,0 +1,4 @@
+image: "{{ .Values.category }}:{{ regexSplit ".*_" .Values.name -1 | last }}"
+
+steps:
+  {{ template "ubuntu-dist-upgrade" }}

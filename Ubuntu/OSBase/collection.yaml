@@ -1,0 +1,9 @@
+packages:
+
+  - category: "ubuntu"
+    name: "OSBase-jammy"
+    version: "0.1"
+
+  - category: "ubuntu"
+    name: "OSBase-bionic"
+    version: "0.1"

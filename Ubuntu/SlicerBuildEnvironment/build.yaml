@@ -1,0 +1,2 @@
+steps:
+   {{ template "qt-install" }}

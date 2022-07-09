@@ -1,0 +1,17 @@
+packages:
+
+  - category: "ubuntu"
+    name: "SlicerBuildEnvironment-jammy"
+    version: "0.1"
+    requires:
+      - name: "OSBase-jammy"
+        category: "ubuntu"
+        version: ">=0.1"
+
+  - category: "ubuntu"
+    name: "SlicerBuildEnvironment-bionic"
+    version: "0.1"
+    requires:
+      - name: "OSBase-bionic"
+        category: "ubuntu"
+        version: ">=0.1"

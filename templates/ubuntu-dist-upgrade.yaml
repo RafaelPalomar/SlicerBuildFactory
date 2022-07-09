@@ -1,0 +1,5 @@
+# Ubuntu
+{{ define "ubuntu-dist-upgrade" }}
+- apt update && apt dist-upgrade -y
+- apt install curl -y
+{{ end }}
