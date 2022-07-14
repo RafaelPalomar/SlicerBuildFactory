@@ -1,0 +1,98 @@
+packages:
+
+  - category: "ubuntu"
+    name: "SlicerBuildEnvironment_jammy"
+    version: "0.1"
+    labels:
+      system.requirements: >-
+        build-essential
+        cmake
+        cmake-curses-gui
+        curl
+        git
+        libxt-dev
+        libssl-dev
+        subversion
+        tar
+        gzip
+      system.qt: "yes"
+      system.qt-libs: >-
+        libqt5svg5-dev
+        libqt5xmlpatterns5-dev
+        libqt5x11extras5-dev
+        qtbase5-private-dev
+        qtmultimedia5-dev
+        qtscript5-dev
+        qttools5-dev
+        qtwebengine5-dev
+
+  # - category: "ubuntu"
+  #   name: "SlicerBuildEnvironment_bionic"
+  #   version: "0.1"
+  #   labels:
+  #     system.requirements: >-
+  #       build-essential
+  #       cmake
+  #       cmake-curses-gui
+  #       curl
+  #       git
+  #       libxt-dev
+  #       libssl-dev
+  #       subversion
+  #     system.qt: "yes"
+  #     system.qt-libs: >-
+  #       libqt5svg5-dev
+  #       libqt5xmlpatterns5-dev
+  #       libqt5x11extras5-dev
+  #       qtbase5-private-dev
+  #       qtmultimedia5-dev
+  #       qtscript5-dev
+  #       qttools5-dev
+  #       qtwebengine5-dev
+
+  # - category: "ubuntu"
+  #   name: "SlicerBuildEnvironment_focal"
+  #   version: "0.1"
+  #   labels:
+  #     system.requirements: >-
+  #       build-essential
+  #       cmake
+  #       cmake-curses-gui
+  #       curl
+  #       git
+  #       libxt-dev
+  #       libssl-dev
+  #       subversion
+  #     system.qt: "yes"
+  #     system.qt-libs: >-
+  #       libqt5svg5-dev
+  #       libqt5xmlpatterns5-dev
+  #       libqt5x11extras5-dev
+  #       qtbase5-private-dev
+  #       qtmultimedia5-dev
+  #       qtscript5-dev
+  #       qttools5-dev
+  #       qtwebengine5-dev
+  #       qt5-default
+
+  - category: "archlinux"
+    name: "SlicerBuildEnvironment_latest"
+    version: "0.1"
+    labels:
+      system.requirements: >-
+        cmake
+        gcc
+        git
+        make
+        patch
+        subversion
+      system.qt: "yes"
+      system.qt-libs: >-
+        qt5-base
+        qt5-multimedia
+        qt5-script
+        qt5-svg
+        qt5-tools
+        qt5-webengine
+        qt5-xmlpatterns
+        qt5-x11extras

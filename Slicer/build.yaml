@@ -1,0 +1,30 @@
+requires:
+  - name: "CCache_{{ regexSplit ".*_" .Values.name -1 | last }}"
+    category: "{{ .Values.category }}"
+    version: "0.1"
+env:
+  - CCACHE_DIR=/var/cache/slicer-ccache
+  - CCACHE_COMPILERCHECK=content
+  - CCACHE_LOGFILE=/var/log/ccache
+  - CCACHE_SLOPPINESS=include_file_ctime,include_file_mtime
+steps:
+  - luet repo update || echo "No repo available"
+  - luet install {{ .Values.category }}/Slicer_ccache_{{ regexSplit ".*_" .Values.name -1 | last }} -y || echo "No ccache available"
+  - mkdir -p ${CCACHE_DIR}
+  # Get the source code
+  - git clone {{ .Values.slicer_url }} --depth 1
+  - cd Slicer && git checkout {{ .Values.slicer_branch }}
+  # Configure project
+  - mkdir Slicer/{{ .Values.slicer_build }}
+  - cd Slicer/{{ .Values.slicer_build }} && cmake -DCMAKE_BUILD_TYPE:STRING={{ .Values.slicer_build }} -DBUILD_TESTING:BOOL={{ .Values.slicer_testing }} ../ -DCMAKE_C_COMPILER=/usr/local/bin/cc -DCMAKE_CXX_COMPILER=/usr/local/bin/c++
+  # Build the project
+  - cd Slicer/{{ .Values.slicer_build }} && make -j{{ .Values.jobs }}
+  - cd Slicer/{{ .Values.slicer_build }}/Slicer-build && cpack -G TGZ
+  # Install the project
+  - cd /opt && tar xvzf /luetbuild/Slicer/{{ .Values.slicer_build }}/Slicer-build/Slicer*-amd64.tar.gz
+subpackages:
+  - name: "Slicer_ccache_{{ regexSplit ".*_" .Values.name -1 | last }}"
+    category: "{{ .Values.category }}"
+    version: "0.1"
+    includes:
+      - /var/cache/slicer-ccache/.*

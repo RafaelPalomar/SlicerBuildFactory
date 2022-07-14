@@ -4,9 +4,13 @@ packages:
     name: "OSBase_jammy"
     version: "0.1"
 
-  - category: "ubuntu"
-    name: "OSBase_bionic"
-    version: "0.1"
+  # - category: "ubuntu"
+  #   name: "OSBase_focal"
+  #   version: "0.1"
+
+  # - category: "ubuntu"
+  #   name: "OSBase_bionic"
+  #   version: "0.1"
 
   - category: "archlinux"
     name: "OSBase_latest"

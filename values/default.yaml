@@ -1,0 +1,17 @@
+
+#########################################################
+# Slicer-related variables
+#########################################################
+slicer_url: "https://github.com/Slicer/Slicer.git"
+slicer_branch: "main"
+slicer_testing: "ON"
+slicer_build: "Release"
+
+VTK_url: "https://github.com/kitware/VTK.git"
+VTK_branch: "master"
+VTK_testing: "OFF"
+VTK_build: "Release"
+#########################################################
+# Compilation-related variables
+#########################################################
+jobs: 3

@@ -2,8 +2,8 @@
 {{ $distro_name  := .Values.category }}
 
 requires:
-  - name: OSBase_{{ regexSplit ".*_" .Values.name -1 | last }}
-    category: {{ .Values.category }}
+  - name: "OSBase_{{ regexSplit ".*_" .Values.name -1 | last }}"
+    category: "{{ .Values.category }}"
     version: "{{ .Values.version }}"
 
 env:
@@ -23,11 +23,18 @@ steps:
 
   # NOTE: QT can come from either the package manager (system.qt=yes) or
   # downloaded from qt.io directly (system.qt=no). If system.qt=no
-  # system.qt-libs should contain the package manager qt libraries.
+  # system.qt-libs should contain the package manager qt libraries. For the
+  # moment, there is only the qt system install option implemented
   {{ if not (eq (index .Values.labels "system.qt") "yes") }}
     {{ template "qt-install" }}
   {{ else }}
     {{ if ( index .Values.labels "system.qt-libs" ) }}
-      {{ template "ubuntu-install" ( index .Values.labels "system.qt-libs" ) }}
+      {{ if eq $distro_name "archlinux" }}
+        {{ template "archlinux-install" ( index .Values.labels "system.qt-libs" ) }}
+      {{ end }}
+
+      {{ if eq $distro_name "ubuntu" }}
+        {{ template "ubuntu-install" ( index .Values.labels "system.qt-libs" ) }}
+      {{ end }}
     {{ end }}
   {{ end }}

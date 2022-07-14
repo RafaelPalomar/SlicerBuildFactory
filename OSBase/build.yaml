@@ -3,6 +3,9 @@
 
 image: {{ $distro_name }}:{{ $distro_tag }}
 
+excludes:
+  - .*
+
 steps:
   {{ if eq $distro_name "archlinux" }}
     {{ template "archlinux-dist-upgrade" }}

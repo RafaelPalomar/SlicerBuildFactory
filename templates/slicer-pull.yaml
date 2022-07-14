@@ -1,0 +1,3 @@
+{{ define "slicer-pull" }}
+- git clone {{ index . 0}}
+{{ end }}

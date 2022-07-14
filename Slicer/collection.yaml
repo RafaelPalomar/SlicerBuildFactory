@@ -1,0 +1,9 @@
+packages:
+
+  - category: "ubuntu"
+    name: "Slicer_jammy"
+    version: "5"
+
+  - category: "archlinux"
+    name: "Slicer_latest"
+    version: "5"
