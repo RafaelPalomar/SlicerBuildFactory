@@ -1,0 +1,18 @@
+
+requires:
+  - name: "SlicerBuildEnvironment+{{ regexSplit ".*\\+" .Values.name -1 | last }}"
+    category: "{{ .Values.category }}"
+    version: "0.1"
+
+steps:
+  # Get the source code
+  - git clone {{ .Values.slicer_url }} --depth 1
+  - cd Slicer && git checkout {{ .Values.slicer_branch }}
+  # Configure project
+  - mkdir Slicer/{{ .Values.slicer_build }}
+  - cd Slicer/{{ .Values.slicer_build }} && cmake -DCMAKE_BUILD_TYPE:STRING={{ .Values.slicer_build }} -DBUILD_TESTING:BOOL={{ .Values.slicer_testing }} ../ -DCMAKE_C_COMPILER=/usr/local/bin/cc -DCMAKE_CXX_COMPILER=/usr/local/bin/c++
+  # Build the project
+  - cd Slicer/{{ .Values.slicer_build }} && make -j{{ .Values.jobs }}
+  - cd Slicer/{{ .Values.slicer_build }}/Slicer-build && cpack -G TGZ
+  # Install the project
+  - cd /opt && tar xvzf /luetbuild/Slicer/{{ .Values.slicer_build }}/Slicer-build/Slicer*-amd64.tar.gz

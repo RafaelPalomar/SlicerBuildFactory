@@ -1,7 +1,10 @@
-{{ $distro_tag := ( regexSplit ".*_" .Values.name -1 | last ) }}
+{{ $distro_tag := ( regexSplit ".*\\+" .Values.name -1 | last ) }}
 {{ $distro_name  := .Values.category }}
 
 image: {{ $distro_name }}:{{ $distro_tag }}
+
+excludes:
+  - .*
 
 steps:
   {{ if eq $distro_name "archlinux" }}

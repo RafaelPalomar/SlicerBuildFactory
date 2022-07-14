@@ -1,0 +1,22 @@
+{{ $distro_tag := ( regexSplit ".*\\+" .Values.name -1 | last ) }}
+{{ $distro_name  := .Values.category }}
+
+requires:
+  - name: "OSBase+{{ regexSplit ".*\\+" .Values.name -1 | last }}"
+    category: "{{ .Values.category }}"
+    version: "{{ .Values.version }}"
+
+excludes:
+  - .*
+
+steps:
+  {{ if eq $distro_name "archlinux" }}
+    {{ template "archlinux-install" "ccache" }}
+  {{ end }}
+
+  {{ if eq $distro_name "ubuntu" }}
+    {{ template "ubuntu-install" "ccache" }}
+  {{ end }}
+
+  - ln -s /usr/bin/ccache /usr/local/bin/c++
+  - ln -s /usr/bin/ccache /usr/local/bin/cc
