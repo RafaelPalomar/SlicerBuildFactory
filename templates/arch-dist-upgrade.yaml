@@ -1,0 +1,4 @@
+# Archlinux
+{{ define "archlinux-dist-upgrade" }}
+- pacman -Syu --noconfirm
+{{end}}

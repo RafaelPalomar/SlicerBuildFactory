@@ -1,0 +1,3 @@
+{{ define "archlinux-install" }}
+  - pacman -S {{.}} --noconfirm
+{{ end }}

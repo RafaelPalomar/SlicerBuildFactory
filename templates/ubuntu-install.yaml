@@ -1,0 +1,3 @@
+{{ define "ubuntu-install" }}
+  - apt-get install {{.}} -y || apt install {{.}} -y
+{{ end }}

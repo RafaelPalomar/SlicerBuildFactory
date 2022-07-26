@@ -1,0 +1,13 @@
+
+#########################################################
+# Slicer-related variables
+#########################################################
+slicer_url: "https://github.com/Slicer/Slicer.git"
+slicer_branch: "main"
+slicer_testing: "ON"
+slicer_build: "Release"
+
+#########################################################
+# Compilation-related variables
+#########################################################
+jobs: 3

@@ -1,0 +1,17 @@
+packages:
+
+  - category: "ubuntu"
+    name: "CCache_jammy"
+    version: "0.1"
+
+  # - category: "ubuntu"
+  #   name: "CCache_focal"
+  #   version: "0.1"
+
+  # - category: "ubuntu"
+  #   name: "CCache_bionic"
+  #   version: "0.1"
+
+  - category: "archlinux"
+    name: "CCache_latest"
+    version: "0.1"

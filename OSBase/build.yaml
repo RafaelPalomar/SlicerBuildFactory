@@ -1,0 +1,16 @@
+{{ $distro_tag := ( regexSplit ".*_" .Values.name -1 | last ) }}
+{{ $distro_name  := .Values.category }}
+
+image: {{ $distro_name }}:{{ $distro_tag }}
+
+excludes:
+  - .*
+
+steps:
+  {{ if eq $distro_name "archlinux" }}
+    {{ template "archlinux-dist-upgrade" }}
+  {{ end }}
+
+  {{ if eq $distro_name "ubuntu" }}
+    {{ template "ubuntu-dist-upgrade" }}
+  {{ end }}
