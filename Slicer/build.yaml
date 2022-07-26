@@ -1,5 +1,5 @@
 requires:
-  - name: "CCache_{{ regexSplit ".*_" .Values.name -1 | last }}"
+  - name: "SlicerBuildEnvironment_{{ regexSplit ".*_" .Values.name -1 | last }}"
     category: "{{ .Values.category }}"
     version: "0.1"
 env:

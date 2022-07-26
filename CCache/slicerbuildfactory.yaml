@@ -1,8 +1,0 @@
-name: "SlicerBuildFactory"
-description: "SlicerBuildFactory"
-type: "docker"
-enable: true
-cached: true
-priority: 1
-urls:
-- "quay.io/slicerbuildfactory/slicerbuildfactory"
