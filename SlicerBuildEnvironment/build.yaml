@@ -11,30 +11,41 @@ env:
 
 steps:
   # Install system requirements -- if any
-  {{ if ( index .Values.labels "system.requirements" ) }}
+  {{ if ( index .Values.labels "system.build_requirements" ) }}
     {{ if eq $distro_name "archlinux" }}
-      {{ template "archlinux-install" ( index .Values.labels "system.requirements" ) }}
+      {{ template "archlinux-install" ( index .Values.labels "system.build_requirements" ) }}
     {{ end }}
 
     {{ if eq $distro_name "ubuntu" }}
-      {{ template "ubuntu-install" ( index .Values.labels "system.requirements" ) }}
+      {{ template "ubuntu-install" ( index .Values.labels "system.build_requirements" ) }}
     {{ end }}
   {{ end }}
 
   # NOTE: QT can come from either the package manager (system.qt=yes) or
   # downloaded from qt.io directly (system.qt=no). If system.qt=no
-  # system.qt-libs should contain the package manager qt libraries. For the
+  # system.qt_requirements should contain the package manager qt libraries. For the
   # moment, there is only the qt system install option implemented
   {{ if not (eq (index .Values.labels "system.qt") "yes") }}
     {{ template "qt-install" }}
   {{ else }}
-    {{ if ( index .Values.labels "system.qt-libs" ) }}
+    {{ if ( index .Values.labels "system.qt_requirements" ) }}
       {{ if eq $distro_name "archlinux" }}
-        {{ template "archlinux-install" ( index .Values.labels "system.qt-libs" ) }}
+        {{ template "archlinux-install" ( index .Values.labels "system.qt_requirements" ) }}
       {{ end }}
 
       {{ if eq $distro_name "ubuntu" }}
-        {{ template "ubuntu-install" ( index .Values.labels "system.qt-libs" ) }}
+        {{ template "ubuntu-install" ( index .Values.labels "system.qt_requirements" ) }}
       {{ end }}
+    {{ end }}
+  {{ end }}
+
+  # Install testing dependencies
+  {{ if and ( index .Values.labels "system.testing_requirements" ) (eq .Values.slicer_testing "ON") }}
+    {{ if eq $distro_name "archlinux" }}
+      {{ template "archlinux-install" ( index .Values.labels "system.testing_requirements" ) }}
+    {{ end }}
+
+    {{ if eq $distro_name "ubuntu" }}
+      {{ template "ubuntu-install" ( index .Values.labels "system.testing_requirements" ) }}
     {{ end }}
   {{ end }}

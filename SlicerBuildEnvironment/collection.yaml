@@ -4,7 +4,7 @@ packages:
     name: "SlicerBuildEnvironment_jammy"
     version: "0.1"
     labels:
-      system.requirements: >-
+      system.build_requirements: >-
         build-essential
         cmake
         cmake-curses-gui
@@ -15,8 +15,10 @@ packages:
         subversion
         tar
         gzip
+      system.testing_requirements: >-
+        xvfb
       system.qt: "yes"
-      system.qt-libs: >-
+      system.qt_requirements: >-
         libqt5svg5-dev
         libqt5xmlpatterns5-dev
         libqt5x11extras5-dev
@@ -79,15 +81,17 @@ packages:
     name: "SlicerBuildEnvironment_latest"
     version: "0.1"
     labels:
-      system.requirements: >-
+      system.build_requirements: >-
         cmake
         gcc
         git
         make
         patch
         subversion
+      system.testing_requirements: >-
+        xorg-server-xvfb
       system.qt: "yes"
-      system.qt-libs: >-
+      system.qt_requirements: >-
         qt5-base
         qt5-multimedia
         qt5-script

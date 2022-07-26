@@ -20,6 +20,10 @@ steps:
   # Build the project
   - cd Slicer/{{ .Values.slicer_build }} && make -j{{ .Values.jobs }}
   - cd Slicer/{{ .Values.slicer_build }}/Slicer-build && cpack -G TGZ
+  # Testing
+  {{ if eq .Values.slicer_testing "ON" }}
+  - cd Slicer/{{ .Values.slicer_build }}/Slicer-build && xvfb-run ctest
+  {{ end }}
   # Install the project
   - cd /opt && tar xvzf /luetbuild/Slicer/{{ .Values.slicer_build }}/Slicer-build/Slicer*-amd64.tar.gz
 subpackages:
