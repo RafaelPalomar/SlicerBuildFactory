@@ -26,9 +26,16 @@ steps:
   {{ end }}
   # Install the project
   - cd /opt && tar xvzf /luetbuild/Slicer/{{ .Values.slicer_build }}/Slicer-build/Slicer*-amd64.tar.gz
+excludes:
+  - /luetbuild/.*
+includes:
+  - /opt/Slicer.*
 subpackages:
   - name: "Slicer_ccache_{{ regexSplit ".*_" .Values.name -1 | last }}"
     category: "{{ .Values.category }}"
     version: "0.1"
+    excludes:
+      - /luetbuild/.*
+      - /opt/Slicer.*
     includes:
       - /var/cache/slicer-ccache/.*
