@@ -3,7 +3,7 @@ requires:
     category: "{{ .Values.category }}"
     version: "0.1"
 env:
-  - CCACHE_DIR=/var/cache/slicer-ccache
+  - CCACHE_DIR=/var/cache/SlicerBuildFactory/{{ .Values.category }}/{{ .Values.name }}
   - CCACHE_COMPILERCHECK=content
   - CCACHE_LOGFILE=/var/log/ccache
   - CCACHE_SLOPPINESS=include_file_ctime,include_file_mtime
@@ -26,16 +26,17 @@ steps:
   {{ end }}
   # Install the project
   - cd /opt && tar xvzf /luetbuild/Slicer/{{ .Values.slicer_build }}/Slicer-build/Slicer*-amd64.tar.gz
-excludes:
-  - /luetbuild/.*
 includes:
   - /opt/Slicer.*
 subpackages:
   - name: "Slicer_ccache_{{ regexSplit ".*_" .Values.name -1 | last }}"
     category: "{{ .Values.category }}"
     version: "0.1"
-    excludes:
-      - /luetbuild/.*
-      - /opt/Slicer.*
     includes:
-      - /var/cache/slicer-ccache/.*
+      - /var$
+      - /var/cache$
+      - /var/cache/slicer-ccache$
+      - /var/cache/slicer-ccache/SlicerBuildFactory$
+      - /var/cache/slicer-ccache/SlicerBuildFactory/{{ .Values.category }}$
+      - /var/cache/slicer-ccache/SlicerBuildFactory/{{ .Values.category }}/{{ .Values.name }}$
+      - /var/cache/slicer-ccache/SlicerBuildFactory/{{ .Values.category }}/{{ .Values.name }}/.*$
