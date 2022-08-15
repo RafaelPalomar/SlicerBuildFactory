@@ -27,6 +27,7 @@ steps:
   # Install the project
   - cd /opt && tar xvzf /luetbuild/Slicer/{{ .Values.slicer_build }}/Slicer-build/Slicer*-amd64.tar.gz
 includes:
+  - /opt$
   - /opt/Slicer.*
 subpackages:
   - name: "Slicer_ccache_{{ regexSplit ".*_" .Values.name -1 | last }}"
@@ -35,8 +36,7 @@ subpackages:
     includes:
       - /var$
       - /var/cache$
-      - /var/cache/slicer-ccache$
-      - /var/cache/slicer-ccache/SlicerBuildFactory$
-      - /var/cache/slicer-ccache/SlicerBuildFactory/{{ .Values.category }}$
-      - /var/cache/slicer-ccache/SlicerBuildFactory/{{ .Values.category }}/{{ .Values.name }}$
-      - /var/cache/slicer-ccache/SlicerBuildFactory/{{ .Values.category }}/{{ .Values.name }}/.*$
+      - /var/cache/SlicerBuildFactory$
+      - /var/cache/SlicerBuildFactory/{{ .Values.category }}$
+      - /var/cache/SlicerBuildFactory/{{ .Values.category }}/{{ .Values.name }}$
+      - /var/cache/SlicerBuildFactory/{{ .Values.category }}/{{ .Values.name }}/.*

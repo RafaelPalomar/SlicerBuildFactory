@@ -11,6 +11,7 @@ packages:
         cmake-curses-gui
         curl
         git
+        libglvnd-dev
         libxt-dev
         libssl-dev
         subversion
