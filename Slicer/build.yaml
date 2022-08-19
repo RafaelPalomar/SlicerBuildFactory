@@ -14,21 +14,37 @@ steps:
   # Get the source code
   - git clone {{ .Values.slicer_url }} --depth 1
   - cd Slicer && git checkout {{ .Values.slicer_branch }}
-  # Configure project
+  # Configure the build
   - mkdir Slicer/{{ .Values.slicer_build }}
-  - cd Slicer/{{ .Values.slicer_build }} && cmake -DCMAKE_BUILD_TYPE:STRING={{ .Values.slicer_build }} -DBUILD_TESTING:BOOL={{ .Values.slicer_testing }} ../ -DCMAKE_C_COMPILER=/usr/local/bin/cc -DCMAKE_CXX_COMPILER=/usr/local/bin/c++
-  # Build the project
-  - cd Slicer/{{ .Values.slicer_build }} && make -j{{ .Values.jobs }}
-  - cd Slicer/{{ .Values.slicer_build }}/Slicer-build && cpack -G TGZ
-  # Testing
-  {{ if eq .Values.slicer_testing "ON" }}
-  - cd Slicer/{{ .Values.slicer_build }}/Slicer-build && xvfb-run ctest || echo "WARNING -- Not all tests passed"
-  {{ end }}
+  - cp ./files/SlicerDashboardScript.tpl.cmake Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
+  - sed -i 's/__ORGANIZATION__/OUS/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
+  - sed -i 's/__HOSTNAME__/SlicerBuidFactory/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
+  - sed -i 's/__OPERATINGSYSTEM__/SlicerBuidFactory/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
+  - lsb_release --id|awk -F":\t" '{print $2}' | xargs -I{} sed -i 's/__OPERATINGSYSTEM__/{}/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
+  - sed -i 's/__SCRIPTMODE__/Experimental/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
+  - sed -i 's/__SLICERRELEASETYPE__/Experimental/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
+  - gcc -v 2>&1 | tail -n1 | xargs -I{} sed -i 's/__COMPILER__/{}/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
+  - sed -i 's/__CTESTBUILDFLAGS__/-j{{ .Values.jobs }}/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
+  - sed -i 's/__CMAKECCOMPILER__/\/usr\/local\/bin\/cc/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
+  - sed -i 's/__CMAKECXXCOMPILER__/\/usr\/local\/bin\/c++/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
+  - sed -i 's/__CCACHEDIR__/\/var\/cache\/SlicerBuildFactory\/{{ .Values.category }}\/{{ .Values.name }}/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
+  - cd Slicer/{{ .Values.slicer_build }} && xvfb-run ctest -S SlicerDashboardScript.cmake -VV
   # Install the project
-  - cd /opt && tar xvzf /luetbuild/Slicer/{{ .Values.slicer_build }}/Slicer-build/Slicer*-amd64.tar.gz
-includes:
-  - /opt$
-  - /opt/Slicer.*
+  # - cd /opt && tar xvzf /luetbuild/Slicer/{{ .Values.slicer_build }}/Slicer-build/Slicer*-amd64.tar.gz
+  # Configure the build
+  #
+  # # Configure project
+  # - mkdir Slicer/{{ .Values.slicer_build }}
+  # - cd Slicer/{{ .Values.slicer_build }} && cmake -DCMAKE_BUILD_TYPE:STRING={{ .Values.slicer_build }} -DBUILD_TESTING:BOOL={{ .Values.slicer_testing }} ../ -DCMAKE_C_COMPILER=/usr/local/bin/cc -DCMAKE_CXX_COMPILER=/usr/local/bin/c++
+  # # Build the project
+  # - cd Slicer/{{ .Values.slicer_build }} && make -j{{ .Values.jobs }}
+  # - cd Slicer/{{ .Values.slicer_build }}/Slicer-build && cpack -G TGZ
+  # # Testing
+  # {{ if eq .Values.slicer_testing "ON" }}
+  # - cd Slicer/{{ .Values.slicer_build }}/Slicer-build && xvfb-run ctest || echo "WARNING -- Not all tests passed"
+  # {{ end }}
+  # # Install the project
+  # - cd /opt && tar xvzf /luetbuild/Slicer/{{ .Values.slicer_build }}/Slicer-build/Slicer*-amd64.tar.gz
 subpackages:
   - name: "Slicer_ccache_{{ regexSplit ".*_" .Values.name -1 | last }}"
     category: "{{ .Values.category }}"

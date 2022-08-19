@@ -10,10 +10,12 @@ packages:
         cmake
         cmake-curses-gui
         curl
+        gawk
         git
         libglvnd-dev
         libxt-dev
         libssl-dev
+        lsb-release
         subversion
         tar
         gzip
@@ -79,27 +81,27 @@ packages:
   #       qtwebengine5-dev
   #       qt5-default
 
-  - category: "archlinux"
-    name: "SlicerBuildEnvironment_latest"
-    version: "0.1"
-    labels:
-      system.build_requirements: >-
-        ccache
-        cmake
-        gcc
-        git
-        make
-        patch
-        subversion
-      system.testing_requirements: >-
-        xorg-server-xvfb
-      system.qt: "yes"
-      system.qt_requirements: >-
-        qt5-base
-        qt5-multimedia
-        qt5-script
-        qt5-svg
-        qt5-tools
-        qt5-webengine
-        qt5-xmlpatterns
-        qt5-x11extras
+  # - category: "archlinux"
+  #   name: "SlicerBuildEnvironment_latest"
+  #   version: "0.1"
+  #   labels:
+  #     system.build_requirements: >-
+  #       ccache
+  #       cmake
+  #       gcc
+  #       git
+  #       make
+  #       patch
+  #       subversion
+  #     system.testing_requirements: >-
+  #       xorg-server-xvfb
+  #     system.qt: "yes"
+  #     system.qt_requirements: >-
+  #       qt5-base
+  #       qt5-multimedia
+  #       qt5-script
+  #       qt5-svg
+  #       qt5-tools
+  #       qt5-webengine
+  #       qt5-xmlpatterns
+  #       qt5-x11extras

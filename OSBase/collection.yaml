@@ -12,6 +12,6 @@ packages:
   #   name: "OSBase_bionic"
   #   version: "0.1"
 
-  - category: "archlinux"
-    name: "OSBase_latest"
-    version: "0.1"
+  # - category: "archlinux"
+  #   name: "OSBase_latest"
+  #   version: "0.1"

@@ -1,5 +1,0 @@
-packages:
-
-  - category: "ubuntu"
-    name: "VTK_jammy"
-    version: "0.1"
