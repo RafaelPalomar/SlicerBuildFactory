@@ -11,24 +11,24 @@ steps:
   - luet repo update || echo "No repo available"
   - luet install {{ .Values.category }}/Slicer_ccache_{{ regexSplit ".*_" .Values.name -1 | last }} -y || echo "No ccache available"
   - mkdir -p ${CCACHE_DIR}
+  - mkdir -p ${HOME}/Dashboards/Experimental/
   # Get the source code
-  - git clone {{ .Values.slicer_url }} --depth 1
-  - cd Slicer && git checkout {{ .Values.slicer_branch }}
+  - cd ${HOME}/Dashboards/Experimental/ && git clone {{ .Values.slicer_url }} Slicer-0 --depth 1
+  - cd ${HOME}/Dashboards/Experimental/Slicer-0 && git checkout {{ .Values.slicer_branch }}
   # Configure the build
-  - mkdir Slicer/{{ .Values.slicer_build }}
-  - cp ./files/SlicerDashboardScript.tpl.cmake Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
-  - sed -i 's/__ORGANIZATION__/OUS/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
-  - sed -i 's/__HOSTNAME__/SlicerBuidFactory/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
-  - sed -i 's/__OPERATINGSYSTEM__/SlicerBuidFactory/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
-  - lsb_release --id|awk -F":\t" '{print $2}' | xargs -I{} sed -i 's/__OPERATINGSYSTEM__/{}/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
-  - sed -i 's/__SCRIPTMODE__/Experimental/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
-  - sed -i 's/__SLICERRELEASETYPE__/Experimental/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
-  - gcc -v 2>&1 | tail -n1 | xargs -I{} sed -i 's/__COMPILER__/{}/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
-  - sed -i 's/__CTESTBUILDFLAGS__/-j{{ .Values.jobs }}/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
-  - sed -i 's/__CMAKECCOMPILER__/\/usr\/local\/bin\/cc/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
-  - sed -i 's/__CMAKECXXCOMPILER__/\/usr\/local\/bin\/c++/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
-  - sed -i 's/__CCACHEDIR__/\/var\/cache\/SlicerBuildFactory\/{{ .Values.category }}\/{{ .Values.name }}/g' Slicer/{{ .Values.slicer_build }}/SlicerDashboardScript.cmake
-  - cd Slicer/{{ .Values.slicer_build }} && xvfb-run ctest -S SlicerDashboardScript.cmake -VV
+  - mkdir -p ${HOME}/Dashboards/Experimental/Slicer-0-build
+  - cp ./files/SlicerDashboardScript.tpl.cmake ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
+  - sed -i 's/__ORGANIZATION__/OUS/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
+  - sed -i 's/__HOSTNAME__/SlicerBuidFactory/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
+  - lsb_release --id|awk -F":\t" '{print $2}' | xargs -I{} sed -i 's/__OPERATINGSYSTEM__/{}/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
+  - sed -i 's/__SCRIPTMODE__/Experimental/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
+  - sed -i 's/__SLICERRELEASETYPE__/Experimental/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
+  - gcc -v 2>&1 | tail -n1 | xargs -I{} sed -i 's/__COMPILER__/{}/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
+  - sed -i 's/__CTESTBUILDFLAGS__/-j{{ .Values.jobs }}/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
+  - sed -i 's/__CMAKECCOMPILER__/\/usr\/local\/bin\/cc/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
+  - sed -i 's/__CMAKECXXCOMPILER__/\/usr\/local\/bin\/c++/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
+  - sed -i 's/__CCACHEDIR__/\/var\/cache\/SlicerBuildFactory\/{{ .Values.category }}\/{{ .Values.name }}/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
+  - cd ${HOME}/Dashboards/Experimental/Slicer-0-build && xvfb-run ctest -S SlicerDashboardScript.cmake -VV
   # Install the project
   # - cd /opt && tar xvzf /luetbuild/Slicer/{{ .Values.slicer_build }}/Slicer-build/Slicer*-amd64.tar.gz
   # Configure the build
