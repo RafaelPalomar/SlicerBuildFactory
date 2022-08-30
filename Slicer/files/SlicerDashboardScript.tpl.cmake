@@ -17,10 +17,10 @@ endmacro()
 dashboard_set(DASHBOARDS_DIR        "$ENV{HOME}/Dashboards/")
 dashboard_set(ORGANIZATION          "__ORGANIZATION__")        # One word, no ponctuation
 dashboard_set(HOSTNAME              "__HOSTNAME__")
-dashboard_set(OPERATING_SYSTEM      "Gentoo")
+dashboard_set(OPERATING_SYSTEM      "__OPERATINGSYSTEM__")
 dashboard_set(SCRIPT_MODE           "__SCRIPTMODE__")   # Experimental, Continuous or Nightly
 dashboard_set(Slicer_RELEASE_TYPE   "__SLICERRELEASETYPE__")   # (E)xperimental, (P)review or (S)table
-dashboard_set(WITH_PACKAGES         FALSE)            # Enable to generate packages
+dashboard_set(WITH_PACKAGES         TRUE)            # Enable to generate packages
 dashboard_set(GIT_TAG               "main")         # Specify a tag for Stable release
 if(APPLE)
   dashboard_set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13")
@@ -65,6 +65,17 @@ set(ENV{CCACHE_ABSSTDERR} "true")
 
 message(STATUS "CCache BASEDIR: ${DASHBOARDS_DIR}/${Slicer_DASHBOARD_SUBDIR}/${Slicer_DIRECTORY_BASENAME}-${Slicer_DIRECTORY_IDENTIFIER}-build")
 
+set(run_ctest_submit FALSE)
+set(run_ctest_with_disable_clean FALSE)
+set(run_ctest_with_update TRUE)
+set(run_ctest_with_configure TRUE)
+set(run_ctest_with_build TRUE)
+set(run_ctest_with_test TRUE)
+set(run_ctest_with_coverage TRUE)
+set(run_ctest_with_memcheck TRUE)
+set(run_ctest_with_packages TRUE)
+set(run_ctest_with_upload FALSE)
+set(run_ctest_with_notes TRUE)
 
 ##########################################
 # WARNING: DO NOT EDIT BEYOND THIS POINT #

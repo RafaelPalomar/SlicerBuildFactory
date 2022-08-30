@@ -4,12 +4,19 @@
 luet_version: 0.32.4
 
 #########################################################
+# System-related variables
+#########################################################
+cmake_version: "3.25.1"
+
+#########################################################
 # Slicer-related variables
 #########################################################
-slicer_url: "https://github.com/Slicer/Slicer.git"
-slicer_branch: "main"
+# slicer_url: "https://github.com/Slicer/Slicer.git"
+# slicer_branch: "main"
 slicer_testing: "ON"
 slicer_build: "Release"
+slicer_url: "https://github.com/Slicer/Slicer.git"
+slicer_branch: "main"
 
 #########################################################
 # Compilation-related variables

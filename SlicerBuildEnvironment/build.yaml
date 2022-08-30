@@ -37,6 +37,9 @@ steps:
       {{ template "ubuntu-install" ( index .Values.labels "system.testing_requirements" ) }}
     {{ end }}
   {{ end }}
+  {{ if eq .Values.labels.systemcmake "no" }}
+  {{ template "cmake-install" "3.25.1" }}
+  {{ end }}
   - curl https://luet.io/install.sh | LUET_VERSION={{ .Values.luet_version }} sh
   - cp slicerbuildfactory.yaml /etc/luet/repos.conf.d
   - ln -s /usr/bin/ccache /usr/local/bin/c++

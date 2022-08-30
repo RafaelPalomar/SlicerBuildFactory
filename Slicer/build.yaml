@@ -7,6 +7,7 @@ env:
   - CCACHE_COMPILERCHECK=content
   - CCACHE_LOGFILE=/var/log/ccache
   - CCACHE_SLOPPINESS=include_file_ctime,include_file_mtime
+  - PATH=/usr/local/bin:$PATH
 steps:
   - luet repo update || echo "No repo available"
   - luet install {{ .Values.category }}/Slicer_ccache_{{ regexSplit ".*_" .Values.name -1 | last }} -y || echo "No ccache available"
@@ -20,7 +21,7 @@ steps:
   - cp ./files/SlicerDashboardScript.tpl.cmake ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
   - sed -i 's/__ORGANIZATION__/OUS/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
   - sed -i 's/__HOSTNAME__/SlicerBuidFactory/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
-  - lsb_release --id|awk -F":\t" '{print $2}' | xargs -I{} sed -i 's/__OPERATINGSYSTEM__/{}/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
+  - lsb_release --id -sr | awk '{printf "%s-%s", $1,$2}' | xargs -I{} sed -i 's/__OPERATINGSYSTEM__/{}/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
   - sed -i 's/__SCRIPTMODE__/Experimental/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
   - sed -i 's/__SLICERRELEASETYPE__/Experimental/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
   - gcc -v 2>&1 | tail -n1 | xargs -I{} sed -i 's/__COMPILER__/{}/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
@@ -28,24 +29,14 @@ steps:
   - sed -i 's/__CMAKECCOMPILER__/\/usr\/local\/bin\/cc/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
   - sed -i 's/__CMAKECXXCOMPILER__/\/usr\/local\/bin\/c++/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
   - sed -i 's/__CCACHEDIR__/\/var\/cache\/SlicerBuildFactory\/{{ .Values.category }}\/{{ .Values.name }}/g' ${HOME}/Dashboards/Experimental/Slicer-0-build/SlicerDashboardScript.cmake
-  - cd ${HOME}/Dashboards/Experimental/Slicer-0-build && xvfb-run ctest -S SlicerDashboardScript.cmake -VV
-  # Install the project
-  # - cd /opt && tar xvzf /luetbuild/Slicer/{{ .Values.slicer_build }}/Slicer-build/Slicer*-amd64.tar.gz
-  # Configure the build
-  #
-  # # Configure project
-  # - mkdir Slicer/{{ .Values.slicer_build }}
-  # - cd Slicer/{{ .Values.slicer_build }} && cmake -DCMAKE_BUILD_TYPE:STRING={{ .Values.slicer_build }} -DBUILD_TESTING:BOOL={{ .Values.slicer_testing }} ../ -DCMAKE_C_COMPILER=/usr/local/bin/cc -DCMAKE_CXX_COMPILER=/usr/local/bin/c++
-  # # Build the project
-  # - cd Slicer/{{ .Values.slicer_build }} && make -j{{ .Values.jobs }}
-  # - cd Slicer/{{ .Values.slicer_build }}/Slicer-build && cpack -G TGZ
-  # # Testing
-  # {{ if eq .Values.slicer_testing "ON" }}
-  # - cd Slicer/{{ .Values.slicer_build }}/Slicer-build && xvfb-run ctest || echo "WARNING -- Not all tests passed"
-  # {{ end }}
-  # # Install the project
-  # - cd /opt && tar xvzf /luetbuild/Slicer/{{ .Values.slicer_build }}/Slicer-build/Slicer*-amd64.tar.gz
+  - cd ${HOME}/Dashboards/Experimental/Slicer-0-build && xvfb-run ctest -S SlicerDashboardScript.cmake -VV || echo "CMake script failed"
+  # Install Slicer
+  - tar xvzf ${HOME}/Dashboards/Experimental/Slicer-0-build/Slicer-build/Slicer*-amd64.tar.gz -C /opt || echo "Couldn't find package"
+excludes:
+  - ^/luetbuild$
+  - ^/root$
 subpackages:
+  # Slicer ccache package
   - name: "Slicer_ccache_{{ regexSplit ".*_" .Values.name -1 | last }}"
     category: "{{ .Values.category }}"
     version: "0.1"
@@ -56,3 +47,10 @@ subpackages:
       - /var/cache/SlicerBuildFactory/{{ .Values.category }}$
       - /var/cache/SlicerBuildFactory/{{ .Values.category }}/{{ .Values.name }}$
       - /var/cache/SlicerBuildFactory/{{ .Values.category }}/{{ .Values.name }}/.*
+  # Slicer package
+  - name: "Slicer_{{ regexSplit ".*_" .Values.name -1 | last }}"
+    category: "{{ .Values.category }}"
+    version: "0.1"
+    includes:
+      - /opt$
+      - /opt/Slicer.*

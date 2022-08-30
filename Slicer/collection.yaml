@@ -1,9 +1,17 @@
 packages:
 
   - category: "ubuntu"
-    name: "Slicer_jammy"
+    name: "SlicerBuild_jammy"
     version: "5"
 
-  # - category: "archlinux"
-  #   name: "Slicer_latest"
+  - category: "ubuntu"
+    name: "SlicerBuild_focal"
+    version: "5"
+
+  # - category: "ubuntu"
+  #   name: "SlicerBuild_bionic"
   #   version: "5"
+
+  - category: "archlinux"
+    name: "Slicer_latest"
+    version: "5"

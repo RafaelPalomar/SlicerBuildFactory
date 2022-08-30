@@ -1,5 +1,8 @@
 # Archlinux
 {{ define "archlinux-dist-upgrade" }}
+- pacman -Sy --noconfirm
+- pacman -S reflector --noconfirm
+- reflector --latest 50 --sort rate --save /etc/pacman.d/mirrorlist
 - pacman -Syy --noconfirm
 - pacman -Syu --noconfirm
 {{end}}
